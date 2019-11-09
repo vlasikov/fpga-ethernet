@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# PlanAhead v13.2
+# Build 131561 by hdbuild on Thu Jun 16 17:01:57 PDT 2011
+# Start of session at: Thu Aug 30 16:59:59 2012
+# Process ID: 4128
+# Log file: D:/Nexys3_ISE_GPIO_UART/planAhead_run_1/planAhead.log
+# Journal file: D:/Nexys3_ISE_GPIO_UART/planAhead_run_1/planAhead.jou
+#-----------------------------------------------------------
+start_gui
+source D:/Nexys3_ISE_GPIO_UART/pa.fromHdl.tcl
+exit
+stop_gui

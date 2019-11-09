@@ -1,0 +1,7 @@
+work	"ADC.vhd"
+work	"ETH_MII_MEM.vhd"
+work	"GPIO_demo.vhd"
+work	"PCK_CRC32_D8.vhd"
+work	"UART.vhd"
+work	"btn_debounce.vhd"
+work	"crcgenerator.vhd"

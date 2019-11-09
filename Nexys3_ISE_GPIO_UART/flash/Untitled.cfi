@@ -1,0 +1,11 @@
+# PROMGEN: Xilinx Prom Generator O.61xd
+# Copyright (c) 1995-2011 Xilinx, Inc.  All rights reserved.
+
+SOFTWARE_VERSION O.61xd
+DATE            08/03/2012 - 13:44
+SOURCE          D:\Nexys3_ISE_GPIO_UART\flash\Untitled.mcs
+DEVICE          2048K
+DATA_WIDTH      1
+FILL_DATA       0xFF
+SIGNATURE       0x19565C7A
+START_ADDRESS   0x00000000 END_ADDRESS 0x0007165B DIRECTION_UP   "D:/Nexys3_ISE_GPIO_UART/gpio_demo.bit" 6slx16csg324

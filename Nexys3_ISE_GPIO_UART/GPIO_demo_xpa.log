@@ -1,0 +1,37 @@
+Creating log file D:\Nexys3_ISE_GPIO_UART\GPIO_demo_xpa.log.
+Loading device for application Rf_Device from file '6slx16.nph' in environment
+D:\Xilinx\13.2\ISE_DS\ISE\.
+   "GPIO_demo" is an NCD, version 3.2, device xc6slx16, package csg324, speed -3
+
+INFO:Power:1693 - 
+   --------------------------------------------------------------
+                         The power estimate will be calculated using PRODUCTION
+   data.
+   --------------------------------------------------------------
+
+Design load 20% completeDesign load 25% completeWARNING:Timing:3159 - The DCM, DCM_CLKGEN_inst, has the attribute
+   DFS_OSCILLATOR_MODE not set to PHASE_FREQ_LOCK. No phase relationship exists
+   between the input clock and CLKFX or CLKFX180 outputs of this DCM. Data paths
+   between these clock domains must be constrained using FROM/TO constraints.
+Design load 30% completeDesign load 60% completeDesign load 95% completeDesign load 100% completeRunning Vector-less Activity Propagation
+..........
+Finished Running Vector-less Activity Propagation
+Finished Running Vector-less Activity Propagation 0 secs 
+WARNING:Power:1337 - Clock frequency for clock net "ETH_RX_CLK_BUFGP" is zero.
+WARNING:Power:1337 - Clock frequency for clock net "ETH_RX_CLK_BUFGP/IBUFG" is zero.
+WARNING:Power:1337 - Clock frequency for clock net "ETH_TX_CLK_BUFGP" is zero.
+WARNING:Power:1337 - Clock frequency for clock net "ETH_TX_CLK_BUFGP/IBUFG" is zero.
+WARNING:Power:1369 - Clock frequency for one or more clocks was not found through
+   timing constraints (PCF file) or simulation data.  Without knowing the
+   clock frequency of all clocks, dynamic power information for those clock
+   domains will default to zero which may under-estimate the power for this
+   design.  To avoid this warning, provide at least one of the following:
+     1. The proper timing constraints (PERIOD) for clocks (re-implement design
+        and load the newly generated PCF file into XPower Analyzer)
+     2. A post PAR simulation-generated VCD or SAIF file indicating clock
+        frequencies
+     3. The clock frequency for clocks in the "By Type -> Clocks" view in the
+        XPower Analyzer GUI and then applying "Update Power Analysis"
+
+Design 'GPIO_demo.ncd' and constraints 'GPIO_demo.pcf' opened successfully
+

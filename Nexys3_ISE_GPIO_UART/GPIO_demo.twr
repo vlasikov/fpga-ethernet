@@ -1,0 +1,188 @@
+--------------------------------------------------------------------------------
+Release 13.2 Trace  (nt)
+Copyright (c) 1995-2011 Xilinx, Inc.  All rights reserved.
+
+D:\Xilinx\13.2\ISE_DS\ISE\bin\nt\unwrapped\trce.exe -intstyle ise -v 3 -s 3 -n
+3 -fastpaths -xml GPIO_demo.twx GPIO_demo.ncd -o GPIO_demo.twr GPIO_demo.pcf
+-ucf pins.ucf
+
+Design file:              GPIO_demo.ncd
+Physical constraint file: GPIO_demo.pcf
+Device,package,speed:     xc6slx16,csg324,C,-3 (PRODUCTION 1.19 2011-06-20)
+Report level:             verbose report
+
+Environment Variable      Effect 
+--------------------      ------ 
+NONE                      No environment variables were set
+--------------------------------------------------------------------------------
+
+INFO:Timing:2698 - No timing constraints found, doing default enumeration.
+INFO:Timing:2752 - To get complete path coverage, use the unconstrained paths 
+   option. All paths that are not constrained will be reported in the 
+   unconstrained paths section(s) of the report.
+INFO:Timing:3339 - The clock-to-out numbers in this timing report are based on 
+   a 50 Ohm transmission line loading model.  For the details of this model, 
+   and for more information on accounting for different loading conditions, 
+   please see the device datasheet.
+
+
+
+Data Sheet report:
+-----------------
+All values displayed in nanoseconds (ns)
+
+Setup/Hold to clock CLK
+------------+------------+------------+------------+------------+------------------+--------+
+            |Max Setup to|  Process   |Max Hold to |  Process   |                  | Clock  |
+Source      | clk (edge) |   Corner   | clk (edge) |   Corner   |Internal Clock(s) | Phase  |
+------------+------------+------------+------------+------------+------------------+--------+
+ADC_IN<0>   |    0.897(R)|      FAST  |   -0.097(R)|      SLOW  |CLK_IBUFG_BUFG    |   0.000|
+ADC_IN<1>   |    0.645(R)|      FAST  |    0.279(R)|      SLOW  |CLK_IBUFG_BUFG    |   0.000|
+ADC_IN<2>   |    1.049(R)|      FAST  |   -0.232(R)|      SLOW  |CLK_IBUFG_BUFG    |   0.000|
+ADC_IN<3>   |    0.607(R)|      FAST  |    0.316(R)|      SLOW  |CLK_IBUFG_BUFG    |   0.000|
+ADC_IN<4>   |    0.920(R)|      FAST  |   -0.117(R)|      SLOW  |CLK_IBUFG_BUFG    |   0.000|
+ADC_IN<5>   |    0.874(R)|      FAST  |   -0.062(R)|      SLOW  |CLK_IBUFG_BUFG    |   0.000|
+ADC_IN<6>   |    0.929(R)|      FAST  |   -0.132(R)|      SLOW  |CLK_IBUFG_BUFG    |   0.000|
+ADC_IN<7>   |    2.207(R)|      SLOW  |   -1.318(R)|      FAST  |CLK_IBUFG_BUFG    |   0.000|
+ADC_IN<8>   |    1.408(R)|      SLOW  |   -0.747(R)|      SLOW  |CLK_IBUFG_BUFG    |   0.000|
+ADC_IN<9>   |    2.175(R)|      SLOW  |   -1.420(R)|      FAST  |CLK_IBUFG_BUFG    |   0.000|
+ADC_IN<10>  |    1.963(R)|      SLOW  |   -1.290(R)|      SLOW  |CLK_IBUFG_BUFG    |   0.000|
+ADC_IN<11>  |    1.669(R)|      SLOW  |   -0.967(R)|      FAST  |CLK_IBUFG_BUFG    |   0.000|
+BTN<0>      |    2.289(R)|      SLOW  |   -0.868(R)|      SLOW  |CLK_IBUFG_BUFG    |   0.000|
+BTN<1>      |    2.446(R)|      SLOW  |   -0.979(R)|      FAST  |CLK_IBUFG_BUFG    |   0.000|
+BTN<2>      |    2.745(R)|      SLOW  |   -1.174(R)|      FAST  |CLK_IBUFG_BUFG    |   0.000|
+BTN<3>      |    1.919(R)|      SLOW  |   -0.519(R)|      SLOW  |CLK_IBUFG_BUFG    |   0.000|
+BTN<4>      |    2.670(R)|      SLOW  |   -0.204(R)|      FAST  |BUFG_O            |   0.000|
+ODOM_CLK    |    0.686(R)|      FAST  |    0.231(R)|      SLOW  |CLK_IBUFG_BUFG    |   0.000|
+ODOM_DIR    |    1.961(R)|      SLOW  |   -0.372(R)|      SLOW  |CLK_IBUFG_BUFG    |   0.000|
+SENSOR_VMT  |    1.407(R)|      SLOW  |   -0.712(R)|      FAST  |CLK_IBUFG_BUFG    |   0.000|
+SW<7>       |    6.445(R)|      SLOW  |   -2.998(R)|      FAST  |CLK_IBUFG_BUFG    |   0.000|
+------------+------------+------------+------------+------------+------------------+--------+
+
+Setup/Hold to clock ETH_RX_CLK
+------------+------------+------------+------------+------------+------------------+--------+
+            |Max Setup to|  Process   |Max Hold to |  Process   |                  | Clock  |
+Source      | clk (edge) |   Corner   | clk (edge) |   Corner   |Internal Clock(s) | Phase  |
+------------+------------+------------+------------+------------+------------------+--------+
+ETH_RXD<0>  |    2.264(R)|      SLOW  |    0.001(R)|      SLOW  |ETH_RX_CLK_BUFGP  |   0.000|
+ETH_RXD<1>  |    2.063(R)|      SLOW  |   -0.141(R)|      SLOW  |ETH_RX_CLK_BUFGP  |   0.000|
+ETH_RXD<2>  |    1.801(R)|      SLOW  |   -0.099(R)|      SLOW  |ETH_RX_CLK_BUFGP  |   0.000|
+ETH_RXD<3>  |    2.229(R)|      SLOW  |    0.018(R)|      SLOW  |ETH_RX_CLK_BUFGP  |   0.000|
+ETH_RX_DV   |    3.181(R)|      SLOW  |   -0.461(R)|      SLOW  |ETH_RX_CLK_BUFGP  |   0.000|
+------------+------------+------------+------------+------------+------------------+--------+
+
+Setup/Hold to clock ETH_TX_CLK
+------------+------------+------------+------------+------------+------------------+--------+
+            |Max Setup to|  Process   |Max Hold to |  Process   |                  | Clock  |
+Source      | clk (edge) |   Corner   | clk (edge) |   Corner   |Internal Clock(s) | Phase  |
+------------+------------+------------+------------+------------+------------------+--------+
+ETH_RX_DV   |    3.897(R)|      SLOW  |   -0.864(R)|      SLOW  |ETH_TX_CLK_BUFGP  |   0.000|
+------------+------------+------------+------------+------------+------------------+--------+
+
+Clock CLK to Pad
+------------+-----------------+------------+-----------------+------------+------------------+--------+
+            |Max (slowest) clk|  Process   |Min (fastest) clk|  Process   |                  | Clock  |
+Destination |  (edge) to PAD  |   Corner   |  (edge) to PAD  |   Corner   |Internal Clock(s) | Phase  |
+------------+-----------------+------------+-----------------+------------+------------------+--------+
+ADC_CLK     |         7.976(R)|      SLOW  |         4.460(R)|      FAST  |CLK_IBUFG_BUFG    |   0.000|
+DAC_CLK     |         8.523(R)|      SLOW  |         4.810(R)|      FAST  |CLK_IBUFG_BUFG    |   0.000|
+DAC_LD      |         8.780(R)|      SLOW  |         4.949(R)|      FAST  |CLK_IBUFG_BUFG    |   0.000|
+DAC_SDI1    |         9.022(R)|      SLOW  |         5.089(R)|      FAST  |CLK_IBUFG_BUFG    |   0.000|
+DAC_SDI2    |         9.085(R)|      SLOW  |         5.117(R)|      FAST  |CLK_IBUFG_BUFG    |   0.000|
+ETH_RST     |         9.426(F)|      SLOW  |         5.435(F)|      FAST  |CLK_IBUFG_BUFG    |   0.000|
+MUX<0>      |         8.843(R)|      SLOW  |         4.987(R)|      FAST  |CLK_IBUFG_BUFG    |   0.000|
+MUX<1>      |         8.892(R)|      SLOW  |         4.990(R)|      FAST  |CLK_IBUFG_BUFG    |   0.000|
+MUX<2>      |         8.748(R)|      SLOW  |         4.920(R)|      FAST  |CLK_IBUFG_BUFG    |   0.000|
+MUX<3>      |         8.889(R)|      SLOW  |         5.051(R)|      FAST  |CLK_IBUFG_BUFG    |   0.000|
+MUX<4>      |         8.622(R)|      SLOW  |         4.855(R)|      FAST  |CLK_IBUFG_BUFG    |   0.000|
+SSEG_AN<0>  |        11.195(R)|      SLOW  |         6.378(R)|      FAST  |CLK_IBUFG_BUFG    |   0.000|
+SSEG_AN<1>  |        11.174(R)|      SLOW  |         6.313(R)|      FAST  |CLK_IBUFG_BUFG    |   0.000|
+SSEG_AN<2>  |        11.917(R)|      SLOW  |         6.900(R)|      FAST  |CLK_IBUFG_BUFG    |   0.000|
+SSEG_AN<3>  |        11.504(R)|      SLOW  |         6.537(R)|      FAST  |CLK_IBUFG_BUFG    |   0.000|
+SSEG_CA<0>  |        11.594(R)|      SLOW  |         6.690(R)|      FAST  |BUFG_O            |   0.000|
+SSEG_CA<1>  |        11.758(R)|      SLOW  |         6.778(R)|      FAST  |BUFG_O            |   0.000|
+SSEG_CA<2>  |        12.380(R)|      SLOW  |         7.063(R)|      FAST  |BUFG_O            |   0.000|
+SSEG_CA<3>  |        12.411(R)|      SLOW  |         7.250(R)|      FAST  |BUFG_O            |   0.000|
+SSEG_CA<4>  |        12.324(R)|      SLOW  |         6.909(R)|      FAST  |BUFG_O            |   0.000|
+SSEG_CA<5>  |        12.133(R)|      SLOW  |         7.028(R)|      FAST  |BUFG_O            |   0.000|
+SSEG_CA<6>  |        12.245(R)|      SLOW  |         6.948(R)|      FAST  |BUFG_O            |   0.000|
+UART_TXD    |         8.708(R)|      SLOW  |         4.870(R)|      FAST  |CLK_IBUFG_BUFG    |   0.000|
+------------+-----------------+------------+-----------------+------------+------------------+--------+
+
+Clock ETH_TX_CLK to Pad
+------------+-----------------+------------+-----------------+------------+------------------+--------+
+            |Max (slowest) clk|  Process   |Min (fastest) clk|  Process   |                  | Clock  |
+Destination |  (edge) to PAD  |   Corner   |  (edge) to PAD  |   Corner   |Internal Clock(s) | Phase  |
+------------+-----------------+------------+-----------------+------------+------------------+--------+
+ETH_TXD<0>  |         9.508(R)|      SLOW  |         5.382(R)|      FAST  |ETH_TX_CLK_BUFGP  |   0.000|
+ETH_TXD<1>  |         9.867(R)|      SLOW  |         5.592(R)|      FAST  |ETH_TX_CLK_BUFGP  |   0.000|
+ETH_TXD<2>  |         9.458(R)|      SLOW  |         5.370(R)|      FAST  |ETH_TX_CLK_BUFGP  |   0.000|
+ETH_TXD<3>  |         9.527(R)|      SLOW  |         5.406(R)|      FAST  |ETH_TX_CLK_BUFGP  |   0.000|
+ETH_TX_EN   |         8.213(R)|      SLOW  |         4.582(R)|      FAST  |ETH_TX_CLK_BUFGP  |   0.000|
+------------+-----------------+------------+-----------------+------------+------------------+--------+
+
+Clock to Setup on destination clock CLK
+---------------+---------+---------+---------+---------+
+               | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
+Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
+---------------+---------+---------+---------+---------+
+CLK            |    5.850|    2.318|    7.861|    3.590|
+ETH_RX_CLK     |    2.868|         |         |         |
+ETH_TX_CLK     |    3.284|         |         |         |
+---------------+---------+---------+---------+---------+
+
+Clock to Setup on destination clock ETH_RX_CLK
+---------------+---------+---------+---------+---------+
+               | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
+Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
+---------------+---------+---------+---------+---------+
+ETH_RX_CLK     |    3.169|         |         |         |
+---------------+---------+---------+---------+---------+
+
+Clock to Setup on destination clock ETH_TX_CLK
+---------------+---------+---------+---------+---------+
+               | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
+Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
+---------------+---------+---------+---------+---------+
+CLK            |   11.019|         |    6.831|         |
+ETH_TX_CLK     |   11.146|    2.629|    5.305|         |
+---------------+---------+---------+---------+---------+
+
+Pad to Pad
+---------------+---------------+---------+
+Source Pad     |Destination Pad|  Delay  |
+---------------+---------------+---------+
+BTN<4>         |LED<0>         |   12.589|
+BTN<4>         |LED<1>         |   12.464|
+BTN<4>         |LED<2>         |   13.101|
+BTN<4>         |LED<3>         |   12.681|
+BTN<4>         |LED<4>         |   11.889|
+BTN<4>         |LED<5>         |   11.809|
+BTN<4>         |LED<6>         |   11.812|
+BTN<4>         |LED<7>         |   11.653|
+BTN<4>         |SSEG_AN<0>     |   11.775|
+BTN<4>         |SSEG_AN<1>     |   11.575|
+BTN<4>         |SSEG_AN<2>     |   11.565|
+BTN<4>         |SSEG_AN<3>     |   11.365|
+SW<0>          |LED<0>         |    8.230|
+SW<1>          |LED<1>         |    8.383|
+SW<2>          |LED<2>         |    8.474|
+SW<3>          |LED<3>         |    8.515|
+SW<4>          |LED<4>         |    8.102|
+SW<5>          |LED<5>         |    7.819|
+SW<6>          |LED<6>         |    7.801|
+SW<7>          |LED<7>         |    8.374|
+---------------+---------------+---------+
+
+
+Analysis completed Thu Oct 18 13:59:48 2012 
+--------------------------------------------------------------------------------
+
+Trace Settings:
+-------------------------
+Trace Settings 
+
+Peak Memory Usage: 146 MB
+
+
+

@@ -1,0 +1,30 @@
+#-----------------------------------------------------------
+# PlanAhead v13.2
+# Build 131561 by hdbuild on Thu Jun 16 17:01:57 PDT 2011
+# Start of session at: Thu Aug 30 16:59:59 2012
+# Process ID: 4128
+# Log file: D:/Nexys3_ISE_GPIO_UART/planAhead_run_1/planAhead.log
+# Journal file: D:/Nexys3_ISE_GPIO_UART/planAhead_run_1/planAhead.jou
+#-----------------------------------------------------------
+INFO: [Common-78] Attempting to get a license: PlanAhead
+INFO: [Common-82] Got a license: PlanAhead
+INFO: [Common-86] Your PlanAhead license expires in -427 day(s)
+INFO: [ArchReader-0] Loading parts and site information from D:\Xilinx\13.2\ISE_DS\PlanAhead\parts\arch.xml
+Parsing RTL primitives file [D:\Xilinx\13.2\ISE_DS\PlanAhead\parts\xilinx\rtl\prims\rtl_prims.xml]
+Finished parsing RTL primitives file [D:\Xilinx\13.2\ISE_DS\PlanAhead\parts\xilinx\rtl\prims\rtl_prims.xml]
+start_gui
+source D:/Nexys3_ISE_GPIO_UART/pa.fromHdl.tcl
+# create_project -name Nexys3_ISE_GPIO_UART -dir "D:/Nexys3_ISE_GPIO_UART/planAhead_run_1" -part xc6slx16csg324-3
+Parsing template File [D:\Xilinx\13.2\ISE_DS\ISE\data\projnav\templates\verilog.xml].
+Finished parsing template File [D:\Xilinx\13.2\ISE_DS\ISE\data\projnav\templates\verilog.xml].
+Parsing template File [D:\Xilinx\13.2\ISE_DS\ISE\data\projnav\templates\vhdl.xml].
+Finished parsing template File [D:\Xilinx\13.2\ISE_DS\ISE\data\projnav\templates\vhdl.xml].
+Parsing template File [D:\Xilinx\13.2\ISE_DS\ISE\data\projnav\templates\ucf.xml].
+Finished parsing template File [D:\Xilinx\13.2\ISE_DS\ISE\data\projnav\templates\ucf.xml].
+create_project: Time (s): 9.203w.  Memory (MB): 341.883p 30.559g
+# set_param project.pinAheadLayout yes
+ERROR: 'rdi::source' was cancelled
+exit
+stop_gui
+INFO: [PlanAhead-261] Exiting PlanAhead...
+INFO: [Common-83] Releasing license: PlanAhead
