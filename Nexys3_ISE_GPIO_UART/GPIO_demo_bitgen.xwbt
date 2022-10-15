@@ -1,8 +1,0 @@
-INTSTYLE=ise
-INFILE=D:\Nexys3_ISE_GPIO_UART\GPIO_demo.ncd
-OUTFILE=D:\Nexys3_ISE_GPIO_UART\GPIO_demo.bit
-FAMILY=Spartan6
-PART=xc6slx16-3csg324
-WORKINGDIR=D:\Nexys3_ISE_GPIO_UART
-LICENSE=ISE
-USER_INFO=No user information available.
