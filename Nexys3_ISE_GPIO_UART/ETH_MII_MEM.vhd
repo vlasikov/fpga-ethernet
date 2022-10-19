@@ -17,6 +17,8 @@
 -- Additional Comments: 
 --
 ----------------------------------------------------------------------------------
+-- https://static.chipdip.ru/lib/010/DOC004010758.pdf
+
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
@@ -50,11 +52,11 @@ architecture Behavioral of ETH_MII_MEM is
     --OP CODE
     '0','1',
     --PHY ADDR
-    '0','0','0','0','0',
+    '0','0','0','0','0',	-- default
     --REG ADDR
     '0','0','0','0','0',
     --TAR
-    '1','0',
+    '1','0',			-- or 0 0
     --DATA
     '1','0','1','0','0','0','0','0',
     --DATA
