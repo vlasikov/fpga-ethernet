@@ -1,0 +1,8 @@
+Storage Target: SPI Flash Single FPGA
+128K
+FF
+Untitled
+C:\git\Nexys3_ISE_GPIO_UART\
+
+MCS
+No

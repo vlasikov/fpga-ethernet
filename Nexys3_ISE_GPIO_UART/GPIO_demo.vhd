@@ -243,21 +243,21 @@ X"00",X"00",X"00",X"00",X"00",X"00",X"C0",X"A8",	X"01",X"47",X"00",X"00",X"00",X
 X"00",X"00",X"00",X"00",X"00",X"00",X"00",X"00",	X"00",X"00",X"00",X"00",X"00",X"00",X"00",X"00"
 ); 
 
-constant EHT_MAC_Destination	: CHAR_ARRAY (0 to 5):=(X"00",X"1d",X"92",X"75",X"a0",X"cc");
-constant EHT_IP_Destination  	: CHAR_ARRAY (0 to 3):=(X"c0",X"a8",X"01",X"47");
+constant EHT_MAC_Destination	: CHAR_ARRAY (0 to 5):=(X"08",X"60",X"6E",X"68",X"3D",X"FE");
+constant EHT_IP_Destination  	: CHAR_ARRAY (0 to 3):=(X"c0",X"a8",X"01",X"8a"); -- 192 168 1 138, 36529 (45454, 0xb18e)
 
 constant EHT_MAC_Source 		: CHAR_ARRAY (0 to 5):=(X"00",X"1e",X"8c",X"3d",X"85",X"fa");
-constant EHT_IP_Source  		: CHAR_ARRAY (0 to 3):=(X"C0",X"A8",X"01",X"fe");
+constant EHT_IP_Source  		: CHAR_ARRAY (0 to 3):=(X"C0",X"A8",X"01",X"fe"); -- 192 169 1 254
 
 constant EHT_TX_PACK_UDP_LEN : natural := 75;
 signal   EHT_TX_PACK_UDP		 : CHAR_ARRAY (0 to (EHT_TX_PACK_UDP_LEN-1)):=(
 X"55",X"55",X"55",X"55",X"55",X"55",X"55",X"D5",  --преамбула
 --MAC											MAC												IP(0800)		Head
-X"00",X"1d",X"92",X"75",X"a0",X"cc",X"00",X"1e",	X"8c",X"3d",X"85",X"fa",X"08",X"00",X"45",X"00",
+X"08",X"60",X"6E",X"68",X"3D",X"FE",X"00",X"1e",	X"8c",X"3d",X"85",X"fa",X"08",X"00",X"45",X"00",
 --Tot Len	N				offset		x		UDP		checksum		IP(source)					IP(dis)			
 X"00",X"31",X"00",X"00",X"40",X"00",X"40",X"11",	X"b6",X"26",X"C0",X"A8",X"01",X"fe",X"c0",X"a8", 
 --				port(source)port(des)	len				checksum		data
-X"01",X"47",X"8b",X"fd",X"b1",X"8e",X"00",X"1d",	X"00",X"00",X"42",X"72",X"6f",X"61",X"64",X"63",
+X"01",X"8a",X"8b",X"fd",X"b1",X"8e",X"00",X"1d",	X"00",X"00",X"42",X"72",X"6f",X"61",X"64",X"63",
 --																															CRC
 X"61",X"73",X"74",X"20",X"6d",X"65",X"73",X"73",	X"61",X"67",X"65",X"20",X"37",X"39",X"00",X"00",
 --
@@ -784,6 +784,7 @@ begin
 		ETH_TX_pack_trans <= ETH_TX_pack_trans_buf;
 		ETH_TX_DATA (15 downto 0) <= ETH_TX_DATA_buf (15 downto 0);
 		
+		
 		case ADC_state is 
 		when 0 =>
 			ETH_TX_pack_trans_buf <= '0';
@@ -794,7 +795,7 @@ begin
 			
 		when 1  =>												--одометр
 			--if (ADC_cntr = 0) then
-			if ((ETH_TX_DATA_write_buf = '0') and  ((ODOM_CNTR_buf (15 downto 0) /= ODOM_CNTR(15 downto 0)) or (SW(7) = '1') )) then
+			if ((ETH_TX_DATA_write_buf = '0') and  ((ODOM_CNTR_buf (15 downto 0) /= ODOM_CNTR(15 downto 0)) or (SW(6) = '1') )) then
 					ODOM_CNTR_buf (15 downto 0) <= ODOM_CNTR(15 downto 0);
 					ETH_TX_DATA_buf (15 downto 0) <= ODOM_CNTR(15 downto 0);
 					ETH_TX_DATA_write_buf <= '1';

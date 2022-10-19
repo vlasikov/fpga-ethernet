@@ -1,0 +1,8 @@
+INTSTYLE=impact
+INFILE=C:\git\Nexys3_ISE_GPIO_UART\impact.xsl
+OUTFILE=C:\git\Nexys3_ISE_GPIO_UART\impact.xsl
+FAMILY=Single
+PART=Single
+WORKINGDIR=C:\git\Nexys3_ISE_GPIO_UART
+LICENSE=iMPACT
+USER_INFO=iMPACT
