@@ -561,6 +561,7 @@ begin
 				EHT_TX_PACK(44 + conv_integer(ETH_TX_DATA_ADDR)) <= ETH_TX_DATA (7 downto 0);
 				EHT_TX_PACK(45 + conv_integer(ETH_TX_DATA_ADDR)) <= ETH_TX_DATA (15 downto 8);
 			end if;		
+			EHT_TX_PACK(46) <= X"55";
 		--end if;
 
 		when others=>

@@ -74,17 +74,18 @@ entity GPIO_demo is
 			  
 			  SENSOR_VMT: in  std_logic;
 			  
-			  ETH_TXD	: inout  STD_LOGIC_VECTOR (3 downto 0);
-			  ETH_TXD_4 : out  STD_LOGIC;
+			  ETH_TXD	: inout  STD_LOGIC_VECTOR (3 downto 0) := "0000";
+			  ETH_TXD_4 : out  STD_LOGIC := '0';
 			  ETH_TX_CLK: in  STD_LOGIC;
 			  ETH_TX_EN	: inout  STD_LOGIC := '0';
-			  ETH_RXD	: in  STD_LOGIC_VECTOR (3 downto 0);
+			  ETH_RXD	: inout  STD_LOGIC_VECTOR (3 downto 0) := "1111";	--PHYAD2, RMIISEL, MODE1, MODE0
 			  ETH_RX_CLK: in  STD_LOGIC;
 			  ETH_RX_DV : in  STD_LOGIC;
 			  ETH_MDIO	: inout  STD_LOGIC;
 			  ETH_MDC	: out  STD_LOGIC;			  
+			  ETH_COL	: out  STD_LOGIC := '1';			-- MODE2
 			  
-			  ETH_RST	: out  STD_LOGIC := '1'
+			  ETH_RST	: inout  STD_LOGIC := '0'
 			  );
 end GPIO_demo;
 
@@ -223,7 +224,8 @@ type CHAR_ARRAY is array (integer range<>) of std_logic_vector(7 downto 0);
 type CHAR_ARRAY_1 is array (integer range<>) of std_logic_vector(0 to 7);
 type INT_ARRAY is array (integer range<>) of integer;
 
-constant TMR_CNTR_MAX : std_logic_vector(26 downto 0) := "101111101011110000100000000"; --"100,000,000 = clk cycles per second
+--constant TMR_CNTR_MAX : std_logic_vector(26 downto 0) := "101111101011110000100000000"; --"100,000,000 = clk cycles per second
+constant TMR_CNTR_MAX : integer := 1000000; --1000; --"25 ms Power, 100us reset
 constant TMR_VAL_MAX : std_logic_vector(3 downto 0) := "1001"; --9
 
 constant MAX_STR_LEN : integer := 27;
@@ -525,7 +527,7 @@ timer_counter_process : process (BUFG_O)
 begin
 	if (rising_edge(BUFG_O)) then
 		if ((tmrCntr = TMR_CNTR_MAX) or (BTN(4) = '1')) then
-			tmrCntr <= (others => '0');
+			--tmrCntr <= (others => '0');
 		else
 			tmrCntr <= tmrCntr + 1;
 		end if;
@@ -685,18 +687,27 @@ begin
 --			ETH_RST_cntr <= ETH_RST_cntr + 1;
 --		end if;
 
-		if ( tmrCntr = TMR_CNTR_MAX and ETH_RST_cntr < 2) then
-			ETH_RST <= '0';
+-- 	start: ETH_RST = 0 
+		if ( tmrCntr = TMR_CNTR_MAX and ETH_RST_cntr < 2) then	-- TMR_CNTR_MAX 100,000,000 = 1s  (min = 26ms, start power 25ms, nRST 0.1ms)
+			-- MODE[2:0] hardware configuration 
+			--	011		100Base-TX Full Duplex. Auto-negotiation disabled.
+			--				CRS is active during Receive
+--			ETH_RXD(0) <= '1';	-- MODE0
+--			ETH_RXD(1) <= '1';	-- MODE1
+--			ETH_COL 	  <= '0';	-- MODE2
+			
 			--ETH_SMI_en <= '1';
-			ETH_TXD_4 <='0';
-			ETH_TXD <= "ZZZZ";
+			--ETH_TXD_4 <='0';
+			--ETH_TXD <= "ZZZZ";
 			--ETH_TX_EN <= '1';
+			ETH_RST <= '1';
 			ETH_RST_cntr <= ETH_RST_cntr + 1;
 		end if;
 		
 		
 		if (tmrCntr = TMR_CNTR_MAX and ETH_RST_cntr = 2) then
-			ETH_RST <= '1';
+			--ETH_RST <= '1';
+			ETH_RXD <= "ZZZZ";
 			ETH_RST_cntr <= ETH_RST_cntr + 1;
 		end if;
 		
@@ -704,13 +715,6 @@ begin
 end process;
 
 ETH_RX_DV_buf <= ETH_RX_DV;
-
-
-
---test1 <= ADC_SUM_en;
---test2 <= ETH_TXD(0);
---JB1_JB1 <= test1;
---JB1_JB2 <= test2;
 
 ETH_MII_MEM_process : process (CLK)
 begin
@@ -832,7 +836,7 @@ begin
 			end if;
 			
 		when 27 =>
-			if (ETH_RST_cntr > 2) then
+			if (ETH_RST = '1') then
 				ETH_TX_pack_trans_buf <= '1';
 			end if;
 			ADC_state <= ADC_state + 1;
@@ -939,7 +943,7 @@ begin
 			if (UART_READ_byte = '1') then
 				--if(UART_TX_BUSY = '0') then
 					UART_TX_VALID <= '1';
-					UART_Data_tx(7 downto 0) <=  EHT_PACK(UART_cntr_byte)(7 downto 0); --ETH_RST_cntr(7 downto 0);--ADC_Data(7 downto 0) ;
+					UART_Data_tx(7 downto 0) <=  EHT_PACK(UART_cntr_byte)(7 downto 0);
 					UART_READ_byte <= '0';
 				--end if;
 			elsif (UART_TX_BUSY = '0') then
