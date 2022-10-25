@@ -78,7 +78,7 @@ entity GPIO_demo is
 			  ETH_TXD_4 : out  STD_LOGIC;
 			  ETH_TX_CLK: in  STD_LOGIC;
 			  ETH_TX_EN	: inout  STD_LOGIC := '0';
-			  ETH_RXD	: inout  STD_LOGIC_VECTOR (3 downto 0) := "1111";	--PHYAD2, RMIISEL, MODE1, MODE0
+			  ETH_RXD	: inout  STD_LOGIC_VECTOR (3 downto 0) := "0011";	--PHYAD2, RMIISEL, MODE1, MODE0
 			  ETH_RX_CLK: in  STD_LOGIC;
 			  ETH_RX_DV : in  STD_LOGIC;
 			  ETH_MDIO	: inout  STD_LOGIC;
