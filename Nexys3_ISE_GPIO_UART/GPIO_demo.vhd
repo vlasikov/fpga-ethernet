@@ -74,7 +74,7 @@ entity GPIO_demo is
 			  
 			  SENSOR_VMT: in  std_logic;
 			  
-			  ETH_TXD	: inout  STD_LOGIC_VECTOR (3 downto 0) := "0000";	--out
+			  ETH_TXD	: out  STD_LOGIC_VECTOR (3 downto 0) := "0000";		--out
 			  ETH_TXD_4 : out  STD_LOGIC := '0';									--out
 			  ETH_TX_CLK: in  STD_LOGIC;
 			  ETH_TX_EN	: inout  STD_LOGIC := '0';
@@ -687,6 +687,11 @@ begin
 --			--ETH_SMI_en <= '1';
 --			ETH_RST_cntr <= ETH_RST_cntr + 1;
 --		end if;
+		if ( tmrCntr < TMR_CNTR_MAX) then
+			ETH_RST <= '0';
+			ETH_RXD <= "0011";
+			ETH_COL <= '1';
+		end if;
 
 		if ( tmrCntr = TMR_CNTR_MAX and ETH_RST_cntr < 2) then
 			ETH_RST <= '1';
@@ -700,7 +705,7 @@ begin
 		
 		if (tmrCntr = TMR_CNTR_MAX and ETH_RST_cntr = 2) then
 			--ETH_RST <= '1';
-			--ETH_RXD <= "ZZZZ";
+			ETH_RXD <= "ZZZZ";
 			ETH_RST_cntr <= ETH_RST_cntr + 1;
 		end if;
 		
