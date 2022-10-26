@@ -48,7 +48,7 @@ architecture Behavioral of ETH_MII_MEM is
     --ST
     '0','1',
     --OP CODE
-    '0','1',
+    '1','0',		-- read
     --PHY ADDR
     '0','0','0','0','0',
     --REG ADDR
@@ -66,7 +66,7 @@ architecture Behavioral of ETH_MII_MEM is
     --ST
     '0','1',
     --OP CODE
-    '0','1',
+    '1','0',		-- read
     --PHY ADDR
     '0','0','0','0','0',
     --REG ADDR

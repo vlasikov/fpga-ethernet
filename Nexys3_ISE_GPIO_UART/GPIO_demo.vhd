@@ -78,7 +78,7 @@ entity GPIO_demo is
 			  ETH_TXD_4 : out  STD_LOGIC := '0';
 			  ETH_TX_CLK: in  STD_LOGIC;
 			  ETH_TX_EN	: inout  STD_LOGIC := '0';
-			  ETH_RXD	: inout  STD_LOGIC_VECTOR (3 downto 0) := "1111";	--PHYAD2, RMIISEL, MODE1, MODE0
+			  ETH_RXD	: inout  STD_LOGIC_VECTOR (3 downto 0) := "0010";	--PHYAD2, RMIISEL, MODE1, MODE0
 			  ETH_RX_CLK: in  STD_LOGIC;
 			  ETH_RX_DV : in  STD_LOGIC;
 			  ETH_MDIO	: inout  STD_LOGIC;
@@ -224,7 +224,8 @@ type CHAR_ARRAY is array (integer range<>) of std_logic_vector(7 downto 0);
 type CHAR_ARRAY_1 is array (integer range<>) of std_logic_vector(0 to 7);
 type INT_ARRAY is array (integer range<>) of integer;
 
-constant TMR_CNTR_MAX : std_logic_vector(26 downto 0) := "101111101011110000100000000"; --"100,000,000 = clk cycles per second
+--constant TMR_CNTR_MAX : std_logic_vector(26 downto 0) := "101111101011110000100000000"; --"100,000,000 = clk cycles per second
+constant TMR_CNTR_MAX : integer := 100000; --1000; --"25 ms Power, 100us reset
 constant TMR_VAL_MAX : std_logic_vector(3 downto 0) := "1001"; --9
 
 constant MAX_STR_LEN : integer := 27;
@@ -688,9 +689,9 @@ begin
 --		end if;
 
 		if ( tmrCntr = TMR_CNTR_MAX and ETH_RST_cntr < 2) then
-			ETH_RST <= '0';
+			ETH_RST <= '1';
 			--ETH_SMI_en <= '1';
-			ETH_TXD_4 <='0';
+			--ETH_TXD_4 <='0';
 			--ETH_TXD <= "ZZZZ";
 			--ETH_TX_EN <= '1';
 			ETH_RST_cntr <= ETH_RST_cntr + 1;
@@ -698,8 +699,8 @@ begin
 		
 		
 		if (tmrCntr = TMR_CNTR_MAX and ETH_RST_cntr = 2) then
-			ETH_RST <= '1';
-			ETH_RST_cntr <= ETH_RST_cntr + 1;
+			--ETH_RST <= '0';
+			--ETH_RST_cntr <= ETH_RST_cntr + 1;
 		end if;
 		
 	end if;
