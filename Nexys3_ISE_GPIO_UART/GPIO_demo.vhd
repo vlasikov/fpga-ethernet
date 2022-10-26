@@ -74,8 +74,8 @@ entity GPIO_demo is
 			  
 			  SENSOR_VMT: in  std_logic;
 			  
-			  ETH_TXD	: inout  STD_LOGIC_VECTOR (3 downto 0) := "0000";
-			  ETH_TXD_4 : out  STD_LOGIC := '0';
+			  ETH_TXD	: inout  STD_LOGIC_VECTOR (3 downto 0) := "0000";	--out
+			  ETH_TXD_4 : out  STD_LOGIC := '0';									--out
 			  ETH_TX_CLK: in  STD_LOGIC;
 			  ETH_TX_EN	: inout  STD_LOGIC := '0';
 			  ETH_RXD	: inout  STD_LOGIC_VECTOR (3 downto 0) := "0010";	--PHYAD2, RMIISEL, MODE1, MODE0
@@ -83,7 +83,7 @@ entity GPIO_demo is
 			  ETH_RX_DV : in  STD_LOGIC;
 			  ETH_MDIO	: inout  STD_LOGIC;
 			  ETH_MDC	: out  STD_LOGIC;			  
-			  ETH_COL	: out  STD_LOGIC := '1';			-- MODE2
+			  ETH_COL	: out  STD_LOGIC := '1';									-- MODE2
 			  
 			  ETH_RST	: inout  STD_LOGIC := '0'
 			  );
@@ -112,10 +112,10 @@ end component;
 
 component ETH
 Port ( 	CLK      	: in std_logic;       -- system clk
-			ETH_TXD		: inout  STD_LOGIC_VECTOR (3 downto 0);
+			ETH_TXD		: out  STD_LOGIC_VECTOR (3 downto 0);
 			--ETH_TXD_4 	: out  STD_LOGIC;
 			ETH_TX_CLK	: in  STD_LOGIC;
-			ETH_TX_EN	: inout  STD_LOGIC := '0';
+			ETH_TX_EN	: out  STD_LOGIC := '0';
 			
 			ETH_RXD		: in  STD_LOGIC_VECTOR (3 downto 0);
 			ETH_RX_CLK	: in  STD_LOGIC;

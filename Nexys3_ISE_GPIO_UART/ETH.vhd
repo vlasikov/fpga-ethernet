@@ -38,10 +38,10 @@ use work.PCK_CRC32_D8.all;
 entity ETH is
 port (
       CLK      	: in std_logic;       -- system clk
-		ETH_TXD		: inout  STD_LOGIC_VECTOR (3 downto 0);
+		ETH_TXD		: out  STD_LOGIC_VECTOR (3 downto 0);
 		--ETH_TXD_4 	: out  STD_LOGIC;
 		ETH_TX_CLK	: in  STD_LOGIC;
-		ETH_TX_EN	: inout  STD_LOGIC := '0';
+		ETH_TX_EN	: out  STD_LOGIC := '0';
 		
 		ETH_RXD		: in  STD_LOGIC_VECTOR (3 downto 0);
 		ETH_RX_CLK	: in  STD_LOGIC;
