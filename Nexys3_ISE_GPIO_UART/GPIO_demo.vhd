@@ -225,7 +225,7 @@ type CHAR_ARRAY_1 is array (integer range<>) of std_logic_vector(0 to 7);
 type INT_ARRAY is array (integer range<>) of integer;
 
 --constant TMR_CNTR_MAX : std_logic_vector(26 downto 0) := "101111101011110000100000000"; --"100,000,000 = clk cycles per second
-constant TMR_CNTR_MAX : integer := 100000; --1000; --"25 ms Power, 100us reset
+constant TMR_CNTR_MAX : integer := 10000000; --100ms; --"25 ms Power, 100us reset
 constant TMR_VAL_MAX : std_logic_vector(3 downto 0) := "1001"; --9
 
 constant MAX_STR_LEN : integer := 27;
@@ -699,8 +699,9 @@ begin
 		
 		
 		if (tmrCntr = TMR_CNTR_MAX and ETH_RST_cntr = 2) then
-			--ETH_RST <= '0';
-			--ETH_RST_cntr <= ETH_RST_cntr + 1;
+			--ETH_RST <= '1';
+			--ETH_RXD <= "ZZZZ";
+			ETH_RST_cntr <= ETH_RST_cntr + 1;
 		end if;
 		
 	end if;
