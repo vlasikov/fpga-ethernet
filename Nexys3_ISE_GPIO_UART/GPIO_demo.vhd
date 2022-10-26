@@ -83,7 +83,7 @@ entity GPIO_demo is
 			  ETH_RX_DV : in  STD_LOGIC;
 			  ETH_MDIO	: inout  STD_LOGIC;
 			  ETH_MDC	: out  STD_LOGIC;			  
-			  ETH_COL	: out  STD_LOGIC := '1';			-- MODE2
+			  ETH_COL	: out  STD_LOGIC := '0';			-- MODE2
 			  
 			  ETH_RST	: inout  STD_LOGIC := '0'
 			  );
@@ -522,11 +522,12 @@ with BTN(4) select
 
 --This process controls the counter that triggers the 7-segment
 --to be incremented. It counts 100,000,000 and then resets.		  
+
 timer_counter_process : process (BUFG_O)
 begin
 	if (rising_edge(BUFG_O)) then
 		if ((tmrCntr = TMR_CNTR_MAX) or (BTN(4) = '1')) then
-			tmrCntr <= (others => '0');
+			--tmrCntr <= (others => '0');
 		else
 			tmrCntr <= tmrCntr + 1;
 		end if;
@@ -542,7 +543,7 @@ begin
 			tmrVal <= (others => '0');
 		elsif (tmrCntr = TMR_CNTR_MAX) then
 			if (tmrVal = TMR_VAL_MAX) then
-				tmrVal <= (others => '0');
+				--tmrVal <= (others => '0');
 			else
 				tmrVal <= tmrVal + 1;
 			end if;
