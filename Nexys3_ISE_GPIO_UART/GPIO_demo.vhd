@@ -808,67 +808,7 @@ begin
 				ADC_state <= 0;
 			end if;
 		end case;
-		
-		
-		
---		else
---			ETH_TX_DATA_write <= '0';
---		end if;
-		
---			if (ADC_SUM_en = '1') then
---			ADC_strob <= not(ADC_strob);
---				if (ADC_strob = '0') then
---					--ADC_SUM_vec64_buf(11 downto 0) <= ADC_Data(11 downto 0);
---					ETH_TX_DATA (11 downto 0) <= ADC_Data(11 downto 0);
---					ETH_TX_DATA_ADDR <= 0;
---					ETH_TX_DATA_write <= '1';
---				else
---					--ADC_SUM_vec64_buf_c(11 downto 0) <= ADC_Data(11 downto 0);
---					ETH_TX_DATA (11 downto 0) <= ADC_Data(11 downto 0);
---					ETH_TX_DATA_ADDR <= 2;
---					ETH_TX_DATA_write <= '1';
---					ADC_SUM_valid <= '1';
---				end if;
---			else
---				ETH_TX_DATA_write <= '0';
---			end if;
 
---		case ADC_SUM_state is 
---		when 0 =>
---			if (ADC_SUM_en = '1') then
---				ADC_SUM_cntr <= 0;
---				ADC_SUM_cntr_N <= 0;
---				ADC_SUM_vec32 <= (others=>'0');
---				ADC_SUM_vec64(63 downto 0)  <= (others=>'0');
---				ADC_SUM_vec64_c(63 downto 0)  <= (others=>'0');
---				ADC_SUM_state <= ADC_SUM_state + 1;
---			end if;
---		when 1 =>
---			if (test1 = '1') then
---				ADC_SUM_state <= ADC_SUM_state + 1;
---			end if;
---		when 2 =>
---			if (ADC_RX_VALID = '1') then
---				ADC_SUM_vec64(63 downto 0) <= ADC_SUM_vec64(63 downto 0) + (conv_std_logic_vector( ( (conv_integer(ADC_Data) - 2048)* ((ADC_PACK_SIN(ADC_SUM_cntr_N) )) ),64 ));
---				ADC_SUM_vec64_c(63 downto 0) <= ADC_SUM_vec64_c(63 downto 0) + (conv_std_logic_vector( ( (conv_integer(ADC_Data) - 2048)* ((ADC_PACK_COS(ADC_SUM_cntr_N) )) ),64 ));
---				ADC_SUM_cntr_N <= ADC_SUM_cntr_N + 1;
---				ADC_SUM_cntr <= ADC_SUM_cntr + 1;				
---				if (ADC_SUM_cntr >= 99) then
---					ADC_SUM_state <= ADC_SUM_state + 1;
---				end if;
---			end if;
---		when 3 =>
---			--ADC_SUM_int32 <= INTEGER (ADC_SUM_float);
---			ADC_SUM_state <= ADC_SUM_state + 1;
---		when 4 =>
---			ADC_SUM_valid <= '1';
---			--ETH_TX_ADC <= '1';
---			ADC_SUM_vec64_buf(63 downto 0) <= ADC_SUM_vec64(63 downto 0);
---			ADC_SUM_vec64_buf_c(63 downto 0) <= ADC_SUM_vec64_c(63 downto 0);
---			ADC_SUM_state <= ADC_SUM_state + 1;
---		when others=>
---			ADC_SUM_state <= 0;
---		end case;
 
 	end if;
 end process;
