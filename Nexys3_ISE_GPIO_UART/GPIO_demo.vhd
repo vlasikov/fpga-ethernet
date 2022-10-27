@@ -85,7 +85,7 @@ entity GPIO_demo is
 			  ETH_MDC	: out  STD_LOGIC;			  
 			  ETH_COL	: out  STD_LOGIC := '1';									-- MODE2
 			  
-			  ETH_RST	: inout  STD_LOGIC := '0'
+			  ETH_RST	: inout  STD_LOGIC := '1'									-- start - nRST
 			  );
 end GPIO_demo;
 
@@ -225,7 +225,7 @@ type CHAR_ARRAY_1 is array (integer range<>) of std_logic_vector(0 to 7);
 type INT_ARRAY is array (integer range<>) of integer;
 
 --constant TMR_CNTR_MAX : std_logic_vector(26 downto 0) := "101111101011110000100000000"; --"100,000,000 = clk cycles per second
-constant TMR_CNTR_MAX : integer := 10000000; --100ms; --"25 ms Power, 100us reset
+constant TMR_CNTR_MAX : integer := 10000; --100ms; --"25 ms Power, 100us reset
 constant TMR_VAL_MAX : std_logic_vector(3 downto 0) := "1001"; --9
 
 constant MAX_STR_LEN : integer := 27;
@@ -266,36 +266,6 @@ X"61",X"73",X"74",X"20",X"6d",X"65",X"73",X"73",	X"61",X"67",X"65",X"20",X"37",X
 X"00",X"00",X"00"
 ); --X"04",X"fc"  		X"78",X"ce"
 
---constant INT_ARRAY_LEN : natural := 100;
---signal   ADC_PACK_SIN		 : INT_ARRAY (0 to (INT_ARRAY_LEN-1)):=(
---0,		  062790, 125333, 187381, 248690, 309017, 368125, 425779, 481754, 535827, 
---587785, 637424, 684547, 728969, 770513, 809017, 844328, 876307, 904827, 929776, 
---951057, 968583, 982287, 992115, 998027, 
---1000000,998027, 992115, 982287, 968583, 951057, 929776, 904827, 876307, 844328, 
---809017, 770513, 728969, 684547, 637424, 587785, 535827, 481754, 425779, 368125, 
---309017, 248690, 187381, 125333, 062790,
---0,		   -062790, -125333, -187381, -248690, -309017, -368125, -425779, -481754, -535827, 
----587785, -637424, -684547, -728969, -770513, -809017, -844328, -876307, -904827, -929776, 
----951057, -968583, -982287, -992115, -998027,
----1000000,-998027, -992115, -982287, -968583, -951057, -929776, -904827, -876307, -844328, 
----809017, -770513, -728969, -684547, -637424, -587785, -535827, -481754, -425779, -368125, 
----309017, -248690, -187381, -125333, -062790
---);
---
---signal   ADC_PACK_COS		 : INT_ARRAY (0 to (INT_ARRAY_LEN-1)):=(
---1000000,998027, 992115, 982287, 968583, 951057, 929776, 904827, 876307, 844328, 
---809017, 770513, 728969, 684547, 637424, 587785, 535827, 481754, 425779, 368125, 
---309017, 248690, 187381, 125333, 062790,
---0,		   -062790, -125333, -187381, -248690, -309017, -368125, -425779, -481754, -535827, 
----587785, -637424, -684547, -728969, -770513, -809017, -844328, -876307, -904827, -929776, 
----951057, -968583, -982287, -992115, -998027,
----1000000,-998027, -992115, -982287, -968583, -951057, -929776, -904827, -876307, -844328, 
----809017, -770513, -728969, -684547, -637424, -587785, -535827, -481754, -425779, -368125, 
----309017, -248690, -187381, -125333, -062790,
---0,		  062790, 125333, 187381, 248690, 309017, 368125, 425779, 481754, 535827, 
---587785, 637424, 684547, 728969, 770513, 809017, 844328, 876307, 904827, 929776, 
---951057, 968583, 982287, 992115, 998027
---);
 
 --Welcome string definition. Note that the values stored at each index
 --are the ASCII values of the indicated character.
@@ -663,34 +633,10 @@ Inst_btn_debounce: btn_debounce port map(
 ETH_RST_process : process (CLK)
 begin
 	if (falling_edge(CLK)) then
---		if (tmrCntr = TMR_CNTR_MAX and ETH_RST_cntr < 5) then
---			ETH_RST <= '0';
---			--ETH_SMI_en <= '1';
---			--ETH_TXD_4 <='0';
---			ETH_TXD <= "ZZZZ";
---			--ETH_TX_EN <= '1';
---			ETH_RST_cntr <= ETH_RST_cntr + 1;
---		end if;
---		
---		if (tmrCntr = TMR_CNTR_MAX and ETH_RST_cntr = 5) then
---			ETH_RST <= '1';
---			ETH_RST_cntr <= ETH_RST_cntr + 1;
---		end if;
---		
---		if ( (ETH_RX_DV_buf = '1') and (ETH_RST_cntr = 6) ) then
---			ETH_SMI_en <= '1';
---			ETH_TXD_4 <='0'; 
---			ETH_RST_cntr <= ETH_RST_cntr + 1;			
---		end if;
---		
---		if (tmrCntr = TMR_CNTR_MAX and ETH_RST_cntr = 7 and uartData = X"f1") then
---			--ETH_SMI_en <= '1';
---			ETH_RST_cntr <= ETH_RST_cntr + 1;
---		end if;
 		if ( tmrCntr < TMR_CNTR_MAX) then
 			ETH_RST <= '0';
 			ETH_RXD <= "0011";
-			ETH_COL <= '1';
+			ETH_COL <= '0';
 		end if;
 
 		if ( tmrCntr = TMR_CNTR_MAX and ETH_RST_cntr < 2) then
