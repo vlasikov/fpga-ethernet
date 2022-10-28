@@ -85,7 +85,7 @@ entity GPIO_demo is
 			  ETH_MDC	: out  STD_LOGIC;			  
 			  ETH_COL	: out  STD_LOGIC := '1';									-- MODE2
 			  
-			  ETH_RST	: inout  STD_LOGIC := '1'									-- start - nRST
+			  ETH_RST	: inout  STD_LOGIC := '1'									-- start - nRST 
 			  );
 end GPIO_demo;
 
@@ -646,8 +646,7 @@ begin
 			--ETH_TXD <= "ZZZZ";
 			--ETH_TX_EN <= '1';
 			ETH_RST_cntr <= ETH_RST_cntr + 1;
-		end if;
-		
+		end if;		
 		
 		if (tmrCntr = TMR_CNTR_MAX and ETH_RST_cntr = 2) then
 			--ETH_RST <= '1';
