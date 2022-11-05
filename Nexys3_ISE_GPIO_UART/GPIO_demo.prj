@@ -1,3 +1,4 @@
+vhdl work "PCK_CONST.vhd"
 vhdl work "PCK_CRC32_D8.vhd"
 vhdl work "UART.vhd"
 vhdl work "ODOM.vhd"

@@ -47,6 +47,7 @@ use ieee.std_logic_arith.all;
 use ieee.numeric_std.all;
 
 use work.PCK_CRC32_D8.all;
+use work.PCK_CONST.all;
 
 
 entity GPIO_demo is
@@ -661,7 +662,7 @@ Inst_btn_debounce: btn_debounce port map(
 ETH_RST_process : process (CLK)
 begin
 	if (falling_edge(CLK)) then
-		if ( tmrCntr < TMR_CNTR_MAX) then
+		if ( tmrCntr < TMR_CNTR_MAX and ETH_RST_cntr < 2) then
 			ETH_RST <= '0';
 			ETH_RXD <= "0011";
 			ETH_COL <= '1';
