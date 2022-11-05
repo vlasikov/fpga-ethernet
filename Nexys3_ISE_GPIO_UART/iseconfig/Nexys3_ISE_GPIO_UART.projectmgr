@@ -9,13 +9,13 @@
          <ClosedNodesVersion>2</ClosedNodesVersion>
       </ClosedNodes>
       <SelectedItems>
-         <SelectedItem>Inst_ETH - ETH - Behavioral (C:/git/fpga-ethernet/Nexys3_ISE_GPIO_UART/ETH.vhd)</SelectedItem>
+         <SelectedItem>GPIO_demo - Behavioral (C:/git/fpga-ethernet/Nexys3_ISE_GPIO_UART/GPIO_demo.vhd)</SelectedItem>
       </SelectedItems>
       <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
       <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
       <ViewHeaderState orientation="horizontal" >000000ff000000000000000100000001000000000000000000000000000000000202000000010000000100000064000001c6000000020000000000000000000000000200000064ffffffff000000810000000300000002000001c60000000100000003000000000000000100000003</ViewHeaderState>
       <UserChangedColumnWidths orientation="horizontal" >true</UserChangedColumnWidths>
-      <CurrentItem>Inst_ETH - ETH - Behavioral (C:/git/fpga-ethernet/Nexys3_ISE_GPIO_UART/ETH.vhd)</CurrentItem>
+      <CurrentItem>GPIO_demo - Behavioral (C:/git/fpga-ethernet/Nexys3_ISE_GPIO_UART/GPIO_demo.vhd)</CurrentItem>
    </ItemView>
    <ItemView engineview="SynthesisOnly" sourcetype="" guiview="Process" >
       <ClosedNodes>

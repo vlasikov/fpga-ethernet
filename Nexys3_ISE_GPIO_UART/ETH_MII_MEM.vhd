@@ -54,7 +54,7 @@ architecture Behavioral of ETH_MII_MEM is
     --REG ADDR
     '0','0','0','0','0',
     --TAR
-    '1','0',
+    '0','0',
     --DATA
     '1','0','1','0','0','0','0','0',
     --DATA
@@ -72,7 +72,7 @@ architecture Behavioral of ETH_MII_MEM is
     --REG ADDR
     '0','0','0','0','0',
     --TAR
-    '1','0',
+    '0','0',
     --DATA
     '1','0','1','0','0','0','0','0',
     --DATA

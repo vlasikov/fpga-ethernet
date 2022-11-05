@@ -47,6 +47,8 @@ port (
 		ETH_RX_CLK	: in  STD_LOGIC;
 		ETH_RX_DV 	: in  STD_LOGIC;
 		
+		ETH_TIMER			: in  STD_LOGIC_VECTOR (7 downto 0);
+		
 		ETH_TX_DATA	: in  STD_LOGIC_VECTOR (15 downto 0);
 		ETH_TX_DATA_write	: in std_logic;
 		ETH_TX_DATA_ADDR	: in  STD_LOGIC_VECTOR (7 downto 0);
@@ -388,8 +390,6 @@ begin
 		when others=>
 			ETH_WRITE_state <= 0;
 		end case;
-		
-				--ETH_WRITE_state <= ETH_WRITE_state + 1;
 	
 		EHT_TX_PACK(0)  <= EHT_MAC_Destination(0);
 		EHT_TX_PACK(1)  <= EHT_MAC_Destination(1);
@@ -406,7 +406,6 @@ begin
 		
 		case ETH_WRITE_state is 
 		when 2 =>
-		--if (ETH_WRITE_state = 2) then
 			EHT_TX_PACK_LEN <= EHT_TX_PACK_ARP_LEN;
 			
 			EHT_TX_PACK(12) <= X"08";						-- ARP
@@ -462,7 +461,6 @@ begin
 			EHT_TX_PACK(59) <= X"00";
 		--end if;
 		when 0 =>
-		---if (ETH_WRITE_state = 0) then
 			EHT_TX_PACK_LEN <= EHT_TX_PACK_ARP_LEN;
 		
 			EHT_TX_PACK(12) <= X"08";						-- ARP
@@ -503,7 +501,6 @@ begin
 --				EHT_TX_PACK(45) <=EHT_RX_PACK(9);
 		--end if;
 		when 1 =>
-		--if (ETH_WRITE_state = 1) then
 			EHT_TX_PACK_LEN <= EHT_TX_PACK_UDP_LEN;
 			
 		
@@ -558,7 +555,10 @@ begin
 					--ETH_TX_PACK_BUF(conv_integer(ETH_TX_DATA_ADDR_buf)) <= ETH_TX_DATA_ADDR_buf (7 downto 0);
 				EHT_TX_PACK(44 + conv_integer(ETH_TX_DATA_ADDR)) <= ETH_TX_DATA (7 downto 0);
 				EHT_TX_PACK(45 + conv_integer(ETH_TX_DATA_ADDR)) <= ETH_TX_DATA (15 downto 8);
-			end if;		
+			end if;	
+
+			EHT_TX_PACK(46) <= ETH_TIMER(7 downto 0);
+			EHT_TX_PACK(47) <= X"FF";
 		--end if;
 
 		when others=>

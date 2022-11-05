@@ -120,6 +120,8 @@ Port ( 	CLK      	: in std_logic;       -- system clk
 			ETH_RXD		: in  STD_LOGIC_VECTOR (3 downto 0);
 			ETH_RX_CLK	: in  STD_LOGIC;
 			ETH_RX_DV 	: in  STD_LOGIC;
+			
+			ETH_TIMER			: in  STD_LOGIC_VECTOR (7 downto 0) := "00001000";
 		
 			ETH_TX_DATA	: in  STD_LOGIC_VECTOR (15 downto 0);
 			ETH_TX_DATA_write	: in std_logic;
@@ -325,7 +327,7 @@ constant BTN_STR : CHAR_ARRAY(0 to 23) :=     (X"42",  --B
 
 --This is used to determine when the 7-segment display should be
 --incremented
-signal tmrCntr : std_logic_vector(26 downto 0) := (others => '0');
+signal tmrCntr : std_logic_vector(31 downto 0) := (others => '0');
 
 --This counter keeps track of which number is currently being displayed
 --on the 7-segment.
@@ -454,7 +456,7 @@ signal ETH_SMI_en		: std_logic := '0';
 signal ETH_SMI_CLK	: std_logic := '0';
 signal ETH_SMI_cntr	: std_logic_vector (7 downto 0):= "00000000";
 signal ETH_tx_cntr	: integer range 0 to 50000000 := 0;
-constant ETH_tx_cntr_max : natural := 100000;
+constant ETH_tx_cntr_max : natural := 100000000;
 signal ETH_TX_DATA		: std_logic_vector (15 downto 0):=X"0000";
 signal ETH_TX_DATA_buf	: std_logic_vector (15 downto 0):=X"0000";
 signal ETH_TX_DATA_write: std_logic := '0';
@@ -481,7 +483,33 @@ signal SENSOR_VMT_buf	: std_logic ;
 signal test1	: std_logic ;
 signal test2	: std_logic ;
 
+signal TIME_clk	:  integer range 0 to 99000 	:=2;			-- clk 100 MHz
+signal TIME_msec : 	integer range 0 to 1000 		:=3;			-- mili second
+signal TIME_sec : 	integer range 0 to 86400 	:=4; 			-- second
+
+signal TIME_sec_SLV :	std_logic_vector (7 downto 0) :=X"00";
+
 begin
+
+time_process : process (BUFG_O)
+begin
+	if (rising_edge(BUFG_O)) then
+		if ((TIME_clk = 99999)) then
+			if ((TIME_msec = 999)) then
+				TIME_sec <= TIME_sec+1;
+				TIME_msec <= 0;
+			else
+				TIME_msec 	<= TIME_msec + 1;
+			end if;
+			
+			TIME_clk <= 0;
+			TIME_sec_SLV <= std_logic_vector(to_unsigned(TIME_sec, 8));
+		else
+			TIME_clk <= TIME_clk + 1;
+		end if;
+		
+	end if;
+end process;
 
 with BTN(4) select
 	LED <= SW 			when '0',
@@ -706,6 +734,8 @@ Inst_ETH: ETH port map(
 		ETH_RXD		=> ETH_RXD,
 		ETH_RX_CLK	=> ETH_RX_CLK,
 		ETH_RX_DV 	=> ETH_RX_DV,
+		
+		ETH_TIMER(7 downto 0) => TIME_sec_SLV(7 downto 0),
 		
 		ETH_TX_DATA => ETH_TX_DATA,
 		ETH_TX_DATA_write => ETH_TX_DATA_write,
