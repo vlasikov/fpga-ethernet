@@ -9,6 +9,7 @@
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.all;
+use ieee.numeric_std.all;
 
 package PCK_CONST is
 
@@ -17,13 +18,23 @@ package PCK_CONST is
 --    <type_name>        : std_logic_vector( 7 downto 0);
 --    <type_name>        : std_logic;
 -- end record;
+	type 		CHAR_ARRAY is array (integer range<>) of std_logic_vector(7 downto 0);
 --
 -- Declare constants
 --
 -- constant <constant_name>		: time := <time_unit> ns;
 -- constant <constant_name>		: integer := <value;
-	--CONSTANT ZERO : STD_LOGIC_VECTOR(0 TO 3) := (OTHERS => '0');
-	CONSTANT PI : REAL := 3.1415;
+
+	constant EHT_MAC_FF 				: CHAR_ARRAY (0 to 5):=(X"ff",X"ff",X"ff",X"ff",X"ff",X"ff");
+	constant EHT_IP_Destination  	: CHAR_ARRAY (0 to 3):=(X"c0",X"a8",X"01",X"48");					-- 192.168.1.72
+	constant EHT_Port_Destination	: CHAR_ARRAY (0 to 1):=(X"b1",X"8e");									-- 45454
+	constant EHT_MAC_Source 		: CHAR_ARRAY (0 to 5):=(X"00",X"1e",X"8c",X"3d",X"85",X"fa");
+	constant EHT_IP_Source  		: CHAR_ARRAY (0 to 3):=(X"C0",X"A8",X"01",X"fe");					-- 192.168.1.254
+	constant EHT_Port_Source 		: CHAR_ARRAY (0 to 1):=(X"8b",X"fd");									-- 35837
+
+	constant EHT_TX_PACK_ARP_LEN 	: natural := 60; --42 60
+	constant EHT_TX_PACK_UDP_LEN 	: natural := 100;--500
+	
 --
 -- Declare functions and procedure
 --

@@ -25,6 +25,7 @@ use IEEE.std_logic_unsigned.all;
 use ieee.std_logic_arith.all;
 
 use work.PCK_CRC32_D8.all;
+use work.PCK_CONST.all;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -58,16 +59,16 @@ end ETH;
 
 architecture Behavioral of ETH is
 
-type 		CHAR_ARRAY is array (integer range<>) of std_logic_vector(7 downto 0);
-signal   EHT_MAC_Destination	: CHAR_ARRAY (0 to 5):=(X"ff",X"ff",X"ff",X"ff",X"ff",X"ff");
-constant EHT_IP_Destination  	: CHAR_ARRAY (0 to 3):=(X"c0",X"a8",X"01",X"48");					-- 192.168.1.72
-constant EHT_Port_Destination	: CHAR_ARRAY (0 to 1):=(X"b1",X"8e");
-constant EHT_MAC_Source 		: CHAR_ARRAY (0 to 5):=(X"00",X"1e",X"8c",X"3d",X"85",X"fa");
-constant EHT_IP_Source  		: CHAR_ARRAY (0 to 3):=(X"C0",X"A8",X"01",X"fe");					-- 192.168.1.254
-constant EHT_Port_Source 		: CHAR_ARRAY (0 to 1):=(X"8b",X"fd");
+--type 		CHAR_ARRAY is array (integer range<>) of std_logic_vector(7 downto 0);
+signal   EHT_MAC_Destination	: CHAR_ARRAY (0 to 5):= EHT_MAC_FF;--(X"ff",X"ff",X"ff",X"ff",X"ff",X"ff");
+--constant EHT_IP_Destination  	: CHAR_ARRAY (0 to 3):=(X"c0",X"a8",X"01",X"48");					-- 192.168.1.72
+--constant EHT_Port_Destination	: CHAR_ARRAY (0 to 1):=(X"b1",X"8e");
+--constant EHT_MAC_Source 		: CHAR_ARRAY (0 to 5):=(X"00",X"1e",X"8c",X"3d",X"85",X"fa");
+--constant EHT_IP_Source  		: CHAR_ARRAY (0 to 3):=(X"C0",X"A8",X"01",X"fe");					-- 192.168.1.254
+--constant EHT_Port_Source 		: CHAR_ARRAY (0 to 1):=(X"8b",X"fd");
 
-constant EHT_TX_PACK_ARP_LEN 	: natural := 60;
-constant EHT_TX_PACK_UDP_LEN 	: natural := 100;--500
+--constant EHT_TX_PACK_ARP_LEN 	: natural := 60;
+--constant EHT_TX_PACK_UDP_LEN 	: natural := 100;--500
 signal 	EHT_UDP_Len				: std_logic_vector (15 downto 0) := conv_std_logic_vector((EHT_TX_PACK_UDP_LEN - 34),16);  --X"001d";
 signal 	EHT_UDP_Total_Length	: std_logic_vector (15 downto 0) := conv_std_logic_vector((EHT_TX_PACK_UDP_LEN - 14),16);
 signal   EHT_TX_PACK_LEN 		: integer range 0 to 10000 := EHT_TX_PACK_ARP_LEN;
@@ -163,19 +164,6 @@ begin
 	end if;
 end process;
 
---ETH_SYNCHRON	: process (ETH_TX_CLK_buf)
---begin
---	if (rising_edge(ETH_TX_CLK_buf)) then
---		if (ETH_cntr >= ETH_cntr_max - 1) then
---			ETH_cntr <= 0;
---			ETH_TX_SYNCHRON_b <= '1';
---		else
---			ETH_cntr <= ETH_cntr + 1;
---			ETH_TX_SYNCHRON_b <= '0';
---		end if;
---	end if;
---end process;
-
 ETH_RX_process : process (ETH_RX_CLK_buf)
 begin
 	if (rising_edge (ETH_RX_CLK_buf)) then	
@@ -213,7 +201,8 @@ begin
 					EHT_RX_PACK(12) = X"08" and						-- ARP
 					EHT_RX_PACK(13) = X"06" and
 					EHT_RX_PACK(20) = X"00" and						-- ARP reply
-					EHT_RX_PACK(21) = X"02"					
+					EHT_RX_PACK(21) = X"02"
+					-- IP проверить еще
 				) then
 				EHT_RX_PACK_ARP_reply <= '1';
 				EHT_MAC_Destination (0) <= EHT_RX_PACK(6);
@@ -373,7 +362,19 @@ end process;
 ETH_TX_WRITE_process : process (CLK)
 begin
 	if (rising_edge(CLK)) then
-	
+		EHT_TX_PACK(0)  <= EHT_MAC_Destination(0);
+		EHT_TX_PACK(1)  <= EHT_MAC_Destination(1);
+		EHT_TX_PACK(2)  <= EHT_MAC_Destination(2);
+		EHT_TX_PACK(3)  <= EHT_MAC_Destination(3);
+		EHT_TX_PACK(4)  <= EHT_MAC_Destination(4);
+		EHT_TX_PACK(5)  <= EHT_MAC_Destination(5);
+		EHT_TX_PACK(6)  <= EHT_MAC_Source(0);
+		EHT_TX_PACK(7)  <= EHT_MAC_Source(1);
+		EHT_TX_PACK(8)  <= EHT_MAC_Source(2);
+		EHT_TX_PACK(9)  <= EHT_MAC_Source(3);
+		EHT_TX_PACK(10) <= EHT_MAC_Source(4);
+		EHT_TX_PACK(11) <= EHT_MAC_Source(5);
+		
 		case ETH_WRITE_state is 
 		when 0 =>
 			if (EHT_RX_PACK_ARP_reply = '1') then			-- получили арп ответ
@@ -390,22 +391,9 @@ begin
 		when others=>
 			ETH_WRITE_state <= 0;
 		end case;
-	
-		EHT_TX_PACK(0)  <= EHT_MAC_Destination(0);
-		EHT_TX_PACK(1)  <= EHT_MAC_Destination(1);
-		EHT_TX_PACK(2)  <= EHT_MAC_Destination(2);
-		EHT_TX_PACK(3)  <= EHT_MAC_Destination(3);
-		EHT_TX_PACK(4)  <= EHT_MAC_Destination(4);
-		EHT_TX_PACK(5)  <= EHT_MAC_Destination(5);
-		EHT_TX_PACK(6)  <= EHT_MAC_Source(0);
-		EHT_TX_PACK(7)  <= EHT_MAC_Source(1);
-		EHT_TX_PACK(8)  <= EHT_MAC_Source(2);
-		EHT_TX_PACK(9)  <= EHT_MAC_Source(3);
-		EHT_TX_PACK(10) <= EHT_MAC_Source(4);
-		EHT_TX_PACK(11) <= EHT_MAC_Source(5);
 		
 		case ETH_WRITE_state is 
-		when 2 =>
+		when 2 =>												-- ARP reply
 			EHT_TX_PACK_LEN <= EHT_TX_PACK_ARP_LEN;
 			
 			EHT_TX_PACK(12) <= X"08";						-- ARP
@@ -417,8 +405,8 @@ begin
 			EHT_TX_PACK(17) <= X"00";
 			EHT_TX_PACK(18) <= X"06";						-- hardware size
 			EHT_TX_PACK(19) <= X"04";						-- protocol size
-			EHT_TX_PACK(20) <= X"00";						-- request
-			EHT_TX_PACK(21) <= X"02";
+			EHT_TX_PACK(20) <= X"00";						
+			EHT_TX_PACK(21) <= X"02";						-- reply
 			EHT_TX_PACK(22) <= EHT_MAC_Source(0);		
 			EHT_TX_PACK(23) <= EHT_MAC_Source(1);
 			EHT_TX_PACK(24) <= EHT_MAC_Source(2);
@@ -440,27 +428,26 @@ begin
 			EHT_TX_PACK(39) <= EHT_IP_Destination(1);
 			EHT_TX_PACK(40) <= EHT_IP_Destination(2);
 			EHT_TX_PACK(41) <= EHT_IP_Destination(3);
-			EHT_TX_PACK(42) <= X"00";
-			EHT_TX_PACK(43) <= X"00";
-			EHT_TX_PACK(44) <= X"00";
-			EHT_TX_PACK(45) <= X"00";
-			EHT_TX_PACK(46) <= X"00";
-			EHT_TX_PACK(47) <= X"00";
-			
-			EHT_TX_PACK(48) <= X"00";
-			EHT_TX_PACK(49) <= X"00";
-			EHT_TX_PACK(50) <= X"00";
-			EHT_TX_PACK(51) <= X"00";
-			EHT_TX_PACK(52) <= X"00";
-			EHT_TX_PACK(53) <= X"00";
-			EHT_TX_PACK(54) <= X"00";
-			EHT_TX_PACK(55) <= X"00";
-			EHT_TX_PACK(56) <= X"00";
-			EHT_TX_PACK(57) <= X"00";
-			EHT_TX_PACK(58) <= X"00";
-			EHT_TX_PACK(59) <= X"00";
-		--end if;
-		when 0 =>
+--			EHT_TX_PACK(42) <= X"00";
+--			EHT_TX_PACK(43) <= X"00";
+--			EHT_TX_PACK(44) <= X"00";
+--			EHT_TX_PACK(45) <= X"00";
+--			EHT_TX_PACK(46) <= X"00";
+--			EHT_TX_PACK(47) <= X"00";
+--			
+--			EHT_TX_PACK(48) <= X"00";
+--			EHT_TX_PACK(49) <= X"00";
+--			EHT_TX_PACK(50) <= X"00";
+--			EHT_TX_PACK(51) <= X"00";
+--			EHT_TX_PACK(52) <= X"00";
+--			EHT_TX_PACK(53) <= X"00";
+--			EHT_TX_PACK(54) <= X"00";
+--			EHT_TX_PACK(55) <= X"00";
+--			EHT_TX_PACK(56) <= X"00";
+--			EHT_TX_PACK(57) <= X"00";
+--			EHT_TX_PACK(58) <= X"00";
+--			EHT_TX_PACK(59) <= X"00";
+		when 0 =>												-- ARP request
 			EHT_TX_PACK_LEN <= EHT_TX_PACK_ARP_LEN;
 		
 			EHT_TX_PACK(12) <= X"08";						-- ARP
@@ -468,12 +455,12 @@ begin
 			EHT_TX_PACK(14) <= X"00";						-- Ethernet
 			EHT_TX_PACK(15) <= X"01";
 
-			EHT_TX_PACK(16) <= X"08";						-- IP
+			EHT_TX_PACK(16) <= X"08";						-- IPv4
 			EHT_TX_PACK(17) <= X"00";
 			EHT_TX_PACK(18) <= X"06";						-- hardware size
 			EHT_TX_PACK(19) <= X"04";						-- protocol size
-			EHT_TX_PACK(20) <= X"00";						-- request
-			EHT_TX_PACK(21) <= X"01";
+			EHT_TX_PACK(20) <= X"00";						
+			EHT_TX_PACK(21) <= X"01";						-- request
 			EHT_TX_PACK(22) <= EHT_MAC_Source(0);		
 			EHT_TX_PACK(23) <= EHT_MAC_Source(1);
 			EHT_TX_PACK(24) <= EHT_MAC_Source(2);
@@ -495,14 +482,28 @@ begin
 			EHT_TX_PACK(39) <= EHT_IP_Destination(1);
 			EHT_TX_PACK(40) <= EHT_IP_Destination(2);
 			EHT_TX_PACK(41) <= EHT_IP_Destination(3);
---				EHT_TX_PACK(42) <=EHT_RX_PACK(6);
---				EHT_TX_PACK(43) <=EHT_RX_PACK(7);
---				EHT_TX_PACK(44) <=EHT_RX_PACK(8);
---				EHT_TX_PACK(45) <=EHT_RX_PACK(9);
-		--end if;
-		when 1 =>
-			EHT_TX_PACK_LEN <= EHT_TX_PACK_UDP_LEN;
 			
+			EHT_TX_PACK(42) <= X"00";
+			EHT_TX_PACK(43) <= X"00";
+			EHT_TX_PACK(44) <= X"00";
+			EHT_TX_PACK(45) <= X"00";
+			EHT_TX_PACK(46) <= X"00";
+			EHT_TX_PACK(47) <= X"00";
+			
+			EHT_TX_PACK(48) <= X"00";
+			EHT_TX_PACK(49) <= X"00";
+			EHT_TX_PACK(50) <= X"00";
+			EHT_TX_PACK(51) <= X"00";
+			EHT_TX_PACK(52) <= X"00";
+			EHT_TX_PACK(53) <= X"00";
+			EHT_TX_PACK(54) <= X"00";
+			EHT_TX_PACK(55) <= X"00";
+			EHT_TX_PACK(56) <= X"00";
+			EHT_TX_PACK(57) <= X"00";
+			EHT_TX_PACK(58) <= X"00";
+			EHT_TX_PACK(59) <= X"00";
+		when 1 =>	-- UDP send
+			EHT_TX_PACK_LEN <= EHT_TX_PACK_UDP_LEN;			
 		
 			EHT_TX_PACK(12) <= X"08";						-- IP
 			EHT_TX_PACK(13) <= X"00";
@@ -542,45 +543,14 @@ begin
 			EHT_TX_PACK(43) <= EHT_TX_PACK_number1 (15 downto 8);		
 			
 			if ( (ETH_TX_DATA_write = '1') ) then
-			
-					--ETH_TX_DATA_ADDR_buf <= ETH_TX_DATA_ADDR;
-	--				ETH_TX_DATA_ADDR_buf <= ETH_TX_DATA_ADDR_buf + 1;
-	--				if (ETH_BUF_cntr < (EHT_TX_PACK_LEN - 44)) then
-	--					ETH_BUF_cntr <= ETH_BUF_cntr + 1;
-	--					EHT_TX_PACK(ETH_BUF_cntr) <= ETH_TX_DATA_ADDR_buf (7 downto 0);
-	--					--EHT_TX_PACK(45 + ETH_BUF_cntr) <= ETH_TX_DATA_ADDR_buf (7 downto 0);
-	--				end if;
-					--EHT_TX_PACK(45 + conv_integer(ETH_TX_DATA_ADDR_buf)) <= ETH_TX_DATA_ADDR_buf (7 downto 0);
-					--EHT_TX_PACK(45 + conv_integer(ETH_TX_DATA_ADDR)) <= ETH_TX_DATA (15 downto 8);
-					--ETH_TX_PACK_BUF(conv_integer(ETH_TX_DATA_ADDR_buf)) <= ETH_TX_DATA_ADDR_buf (7 downto 0);
 				EHT_TX_PACK(44 + conv_integer(ETH_TX_DATA_ADDR)) <= ETH_TX_DATA (7 downto 0);
 				EHT_TX_PACK(45 + conv_integer(ETH_TX_DATA_ADDR)) <= ETH_TX_DATA (15 downto 8);
 			end if;	
 
 			EHT_TX_PACK(46) <= ETH_TIMER(7 downto 0);
 			EHT_TX_PACK(47) <= X"FF";
-		--end if;
-
 		when others=>
-		end case;
-
---		case ETH_BUF_state is 
---		when 0 =>
---			if (ETH_TX_pack_trans_buf = '1') then
---				ETH_BUF_cntr <= 0;
---				ETH_BUF_state <= ETH_BUF_state + 1;
---			end if;
---		when 1 =>
---			if (ETH_BUF_cntr < (EHT_TX_PACK_LEN)) then
---				EHT_TX_PACK_0(ETH_BUF_cntr) <= EHT_TX_PACK(ETH_BUF_cntr);
---				ETH_BUF_cntr <= ETH_BUF_cntr + 1;
---			else
---				ETH_BUF_state <= ETH_BUF_state + 1;
---			end if;	
---		when others=>
---			ETH_BUF_state <= 0;
---		end case;
-	
+		end case;	
 	end if;
 end process;
 
