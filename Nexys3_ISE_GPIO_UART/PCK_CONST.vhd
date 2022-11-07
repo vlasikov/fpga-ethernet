@@ -32,8 +32,8 @@ package PCK_CONST is
 	constant EHT_IP_Source  		: CHAR_ARRAY (0 to 3):=(X"C0",X"A8",X"01",X"fe");					-- 192.168.1.254
 	constant EHT_Port_Source 		: CHAR_ARRAY (0 to 1):=(X"8b",X"fd");									-- 35837
 
-	constant EHT_TX_PACK_ARP_LEN 	: natural := 60; --42 60
-	constant EHT_TX_PACK_UDP_LEN 	: natural := 100;--500
+	constant EHT_TX_PACK_ARP_LEN 	: natural := 60; -- minimum length packet
+	constant EHT_TX_PACK_UDP_LEN 	: natural := 100;--100
 	
 --
 -- Declare functions and procedure

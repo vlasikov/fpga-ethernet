@@ -73,7 +73,7 @@ signal 	EHT_UDP_Len				: std_logic_vector (15 downto 0) := conv_std_logic_vector
 signal 	EHT_UDP_Total_Length	: std_logic_vector (15 downto 0) := conv_std_logic_vector((EHT_TX_PACK_UDP_LEN - 14),16);
 signal   EHT_TX_PACK_LEN 		: integer range 0 to 10000 := EHT_TX_PACK_ARP_LEN;
 signal   EHT_TX_PACK	 			: CHAR_ARRAY (0 to (EHT_TX_PACK_UDP_LEN-1));
-signal   EHT_TX_PACK_0 			: CHAR_ARRAY (0 to (EHT_TX_PACK_UDP_LEN-1));
+--signal   EHT_TX_PACK_0 			: CHAR_ARRAY (0 to (EHT_TX_PACK_UDP_LEN-1));
 signal   EHT_TX_PACK_number	: std_logic_vector (15 downto 0);
 signal   EHT_TX_PACK_number1	: std_logic_vector (15 downto 0);
 signal	ETH_TX_PACK_BUF		: CHAR_ARRAY (0 to (500-1));
@@ -483,25 +483,25 @@ begin
 			EHT_TX_PACK(40) <= EHT_IP_Destination(2);
 			EHT_TX_PACK(41) <= EHT_IP_Destination(3);
 			
-			EHT_TX_PACK(42) <= X"00";
-			EHT_TX_PACK(43) <= X"00";
-			EHT_TX_PACK(44) <= X"00";
-			EHT_TX_PACK(45) <= X"00";
-			EHT_TX_PACK(46) <= X"00";
-			EHT_TX_PACK(47) <= X"00";
-			
-			EHT_TX_PACK(48) <= X"00";
-			EHT_TX_PACK(49) <= X"00";
-			EHT_TX_PACK(50) <= X"00";
-			EHT_TX_PACK(51) <= X"00";
-			EHT_TX_PACK(52) <= X"00";
-			EHT_TX_PACK(53) <= X"00";
-			EHT_TX_PACK(54) <= X"00";
-			EHT_TX_PACK(55) <= X"00";
-			EHT_TX_PACK(56) <= X"00";
-			EHT_TX_PACK(57) <= X"00";
-			EHT_TX_PACK(58) <= X"00";
-			EHT_TX_PACK(59) <= X"00";
+--			EHT_TX_PACK(42) <= X"00";
+--			EHT_TX_PACK(43) <= X"00";
+--			EHT_TX_PACK(44) <= X"00";
+--			EHT_TX_PACK(45) <= X"00";
+--			EHT_TX_PACK(46) <= X"00";
+--			EHT_TX_PACK(47) <= X"00";
+--			
+--			EHT_TX_PACK(48) <= X"00";
+--			EHT_TX_PACK(49) <= X"00";
+--			EHT_TX_PACK(50) <= X"00";
+--			EHT_TX_PACK(51) <= X"00";
+--			EHT_TX_PACK(52) <= X"00";
+--			EHT_TX_PACK(53) <= X"00";
+--			EHT_TX_PACK(54) <= X"00";
+--			EHT_TX_PACK(55) <= X"00";
+--			EHT_TX_PACK(56) <= X"00";
+--			EHT_TX_PACK(57) <= X"00";
+--			EHT_TX_PACK(58) <= X"00";
+--			EHT_TX_PACK(59) <= X"00";
 		when 1 =>	-- UDP send
 			EHT_TX_PACK_LEN <= EHT_TX_PACK_UDP_LEN;			
 		
@@ -554,11 +554,9 @@ begin
 	end if;
 end process;
 
---ETH_TX_buf_process : process (CLK)
 ETH_TX_buf_process : process (ETH_TX_CLK_buf)
 begin
 	if (falling_edge(ETH_TX_CLK_buf)) then
-	--if (rising_edge(CLK)) then
 		if (ETH_TX_pack_cntr < 7) then
 			EHT_TX_byte <= X"55";
 		end if;
