@@ -35,14 +35,14 @@ package body PCK_CRC32_D8 is
   -- polynomial: (0 1 2 4 5 7 8 10 11 12 16 22 23 26 32)
   -- data width: 8
   -- convention: the first serial bit is D[7]
-  function nextCRC32_D8
-    (Data: std_logic_vector(0 to 7);
-     crc:  std_logic_vector(0 to 31))
-    return std_logic_vector is
-
-    variable d:      std_logic_vector(0 to 7);
-    variable c:      std_logic_vector(0 to 31);
-    variable newcrc: std_logic_vector(0 to 31);
+  function nextCRC32_D8(
+	  Data: std_logic_vector(0 to 7);
+     crc:  std_logic_vector(0 to 31)
+	 ) return std_logic_vector is
+		-- variable declaration
+		variable d:      std_logic_vector(0 to 7);
+		variable c:      std_logic_vector(0 to 31);
+		variable newcrc: std_logic_vector(0 to 31);
 
   begin
     d := Data;

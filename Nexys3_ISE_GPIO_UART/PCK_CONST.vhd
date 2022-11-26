@@ -26,7 +26,8 @@ package PCK_CONST is
 -- constant <constant_name>		: integer := <value;
 
 	constant EHT_MAC_FF 				: CHAR_ARRAY (0 to 5):=(X"ff",X"ff",X"ff",X"ff",X"ff",X"ff");
-	constant EHT_IP_Destination  	: CHAR_ARRAY (0 to 3):=(X"c0",X"a8",X"01",X"48");					-- 192.168.1.72
+--	constant EHT_IP_Destination  	: CHAR_ARRAY (0 to 3):=(X"c0",X"a8",X"01",X"48");					-- 192.168.1.72
+	constant EHT_IP_Destination  	: CHAR_ARRAY (0 to 3):=(X"c0",X"a8",X"01",X"67");					-- 192.168.1.103
 	constant EHT_Port_Destination	: CHAR_ARRAY (0 to 1):=(X"b1",X"8e");									-- 45454
 	constant EHT_MAC_Source 		: CHAR_ARRAY (0 to 5):=(X"00",X"1e",X"8c",X"3d",X"85",X"fa");
 	constant EHT_IP_Source  		: CHAR_ARRAY (0 to 3):=(X"C0",X"A8",X"01",X"fe");					-- 192.168.1.254

@@ -192,6 +192,7 @@ begin
 	if (rising_edge (ETH_RX_CLK_buf)) then
 		ETH_RX_DV_buf1 <= ETH_RX_DV_buf;
 		if(ETH_RX_DV_buf1 = '1' and ETH_RX_DV_buf = '0') then
+			-- ARP reply
 			if ( 	EHT_RX_PACK(0)  = EHT_MAC_Source(0) and		-- main MAC
 					EHT_RX_PACK(1)  = EHT_MAC_Source(1) and
 					EHT_RX_PACK(2)  = EHT_MAC_Source(2) and
@@ -212,6 +213,8 @@ begin
 				EHT_MAC_Destination (4) <= EHT_RX_PACK(10);
 				EHT_MAC_Destination (5) <= EHT_RX_PACK(11);
 			end if;
+			-- ARP request. myIP ?
+			-- only from my server
 			if ( 	EHT_RX_PACK(0)  = X"FF" and		-- main MAC
 					EHT_RX_PACK(1)  = X"FF" and
 					EHT_RX_PACK(2)  = X"FF" and
@@ -249,7 +252,7 @@ begin
 			ETH_TX_EN <= '0';
 			ETH_TX_LSB <= '0';
 			ETH_TX_err <= '0';
-			if (ETH_RX_DV_buf = '0') then														-- от коллизий
+			if (ETH_RX_DV_buf = '0') then														-- от коллизий (убрать)
 				ETH_TX_state <= ETH_TX_state + 1;
 			end if;
 		when 2 =>										-- 
@@ -382,7 +385,7 @@ begin
 			end if;
 		when 1 => 
 			if (EHT_RX_PACK_ARP_request = '1') then
-				ETH_WRITE_state <= 1;--2
+				ETH_WRITE_state <= 2;
 			end if;
 		when 2 =>
 			if(EHT_RX_PACK_ARP_request = '0') then
@@ -428,25 +431,25 @@ begin
 			EHT_TX_PACK(39) <= EHT_IP_Destination(1);
 			EHT_TX_PACK(40) <= EHT_IP_Destination(2);
 			EHT_TX_PACK(41) <= EHT_IP_Destination(3);
---			EHT_TX_PACK(42) <= X"00";
---			EHT_TX_PACK(43) <= X"00";
---			EHT_TX_PACK(44) <= X"00";
---			EHT_TX_PACK(45) <= X"00";
---			EHT_TX_PACK(46) <= X"00";
---			EHT_TX_PACK(47) <= X"00";
---			
---			EHT_TX_PACK(48) <= X"00";
---			EHT_TX_PACK(49) <= X"00";
---			EHT_TX_PACK(50) <= X"00";
---			EHT_TX_PACK(51) <= X"00";
---			EHT_TX_PACK(52) <= X"00";
---			EHT_TX_PACK(53) <= X"00";
---			EHT_TX_PACK(54) <= X"00";
---			EHT_TX_PACK(55) <= X"00";
---			EHT_TX_PACK(56) <= X"00";
---			EHT_TX_PACK(57) <= X"00";
---			EHT_TX_PACK(58) <= X"00";
---			EHT_TX_PACK(59) <= X"00";
+			EHT_TX_PACK(42) <= X"00";
+			EHT_TX_PACK(43) <= X"00";
+			EHT_TX_PACK(44) <= X"00";
+			EHT_TX_PACK(45) <= X"00";
+			EHT_TX_PACK(46) <= X"00";
+			EHT_TX_PACK(47) <= X"00";
+			
+			EHT_TX_PACK(48) <= X"00";
+			EHT_TX_PACK(49) <= X"00";
+			EHT_TX_PACK(50) <= X"00";
+			EHT_TX_PACK(51) <= X"00";
+			EHT_TX_PACK(52) <= X"00";
+			EHT_TX_PACK(53) <= X"00";
+			EHT_TX_PACK(54) <= X"00";
+			EHT_TX_PACK(55) <= X"00";
+			EHT_TX_PACK(56) <= X"00";
+			EHT_TX_PACK(57) <= X"00";
+			EHT_TX_PACK(58) <= X"00";
+			EHT_TX_PACK(59) <= X"00";
 		when 0 =>												-- ARP request
 			EHT_TX_PACK_LEN <= EHT_TX_PACK_ARP_LEN;
 		
@@ -483,25 +486,25 @@ begin
 			EHT_TX_PACK(40) <= EHT_IP_Destination(2);
 			EHT_TX_PACK(41) <= EHT_IP_Destination(3);
 			
---			EHT_TX_PACK(42) <= X"00";
---			EHT_TX_PACK(43) <= X"00";
---			EHT_TX_PACK(44) <= X"00";
---			EHT_TX_PACK(45) <= X"00";
---			EHT_TX_PACK(46) <= X"00";
---			EHT_TX_PACK(47) <= X"00";
---			
---			EHT_TX_PACK(48) <= X"00";
---			EHT_TX_PACK(49) <= X"00";
---			EHT_TX_PACK(50) <= X"00";
---			EHT_TX_PACK(51) <= X"00";
---			EHT_TX_PACK(52) <= X"00";
---			EHT_TX_PACK(53) <= X"00";
---			EHT_TX_PACK(54) <= X"00";
---			EHT_TX_PACK(55) <= X"00";
---			EHT_TX_PACK(56) <= X"00";
---			EHT_TX_PACK(57) <= X"00";
---			EHT_TX_PACK(58) <= X"00";
---			EHT_TX_PACK(59) <= X"00";
+			EHT_TX_PACK(42) <= X"00";
+			EHT_TX_PACK(43) <= X"00";
+			EHT_TX_PACK(44) <= X"00";
+			EHT_TX_PACK(45) <= X"00";
+			EHT_TX_PACK(46) <= X"00";
+			EHT_TX_PACK(47) <= X"00";
+			
+			EHT_TX_PACK(48) <= X"00";
+			EHT_TX_PACK(49) <= X"00";
+			EHT_TX_PACK(50) <= X"00";
+			EHT_TX_PACK(51) <= X"00";
+			EHT_TX_PACK(52) <= X"00";
+			EHT_TX_PACK(53) <= X"00";
+			EHT_TX_PACK(54) <= X"00";
+			EHT_TX_PACK(55) <= X"00";
+			EHT_TX_PACK(56) <= X"00";
+			EHT_TX_PACK(57) <= X"00";
+			EHT_TX_PACK(58) <= X"00";
+			EHT_TX_PACK(59) <= X"00";
 		when 1 =>	-- UDP send
 			EHT_TX_PACK_LEN <= EHT_TX_PACK_UDP_LEN;			
 		
