@@ -228,7 +228,7 @@ type CHAR_ARRAY_1 is array (integer range<>) of std_logic_vector(0 to 7);
 type INT_ARRAY is array (integer range<>) of integer;
 
 --constant TMR_CNTR_MAX : std_logic_vector(26 downto 0) := "101111101011110000100000000"; --"100,000,000 = clk cycles per second
-constant TMR_CNTR_MAX : integer := 10000; --100ms; --"25 ms Power, 100us reset
+constant TMR_CNTR_MAX : integer := 1000000; --10ms; --"ETHERNET POWER (RESET) 25 ms Power, 100us reset (100 000000 clk = 1sec)
 constant TMR_VAL_MAX : std_logic_vector(3 downto 0) := "1001"; --9
 
 constant MAX_STR_LEN : integer := 27;
@@ -434,7 +434,7 @@ signal ODOM_ON		   : std_logic ;
 signal ODOM_CNTR		: STD_LOGIC_VECTOR (15 downto 0) :=X"0000";
 signal ODOM_CNTR_buf	: STD_LOGIC_VECTOR (15 downto 0) :=X"0000";
 
-
+signal ETH_MODE		: std_logic_vector (2 downto 0):= "011";
 signal ETH_TX_EN_test: std_logic := '1';
 signal ETH_TX_state	: integer range 0 to 255;
 signal ETH_TX_pack_cntr : integer range 0 to 255 := 0;
@@ -512,13 +512,18 @@ begin
 	end if;
 end process;
 
+
+--with BTN(4) select
+--	ETH_RST <= '1'				when '1', -- '0'
+--				  SW(0) 			when others;
+				  
 with BTN(4) select
-	LED <= SW 			when '0',
-			 "00000000" when others;
+	LED <= "0000111" & ETH_RST			when '0',	-- ETH_RST --SW
+	"00000000" when others;
 
 with BTN(4) select
 	SSEG_AN <= btnDeBnc(3 downto 0)	when '1', -- '0'
-				  "1111" 			when others;
+				  "0000" 			when others;
 
 --This process controls the counter that triggers the 7-segment
 --to be incremented. It counts 100,000,000 and then resets.		  
@@ -526,9 +531,11 @@ with BTN(4) select
 timer_counter_process : process (BUFG_O)
 begin
 	if (rising_edge(BUFG_O)) then
-		if ((tmrCntr = TMR_CNTR_MAX) or (BTN(4) = '1')) then
-			--tmrCntr <= (others => '0');
-		else
+		if ((tmrCntr = TMR_CNTR_MAX) ) then
+			if ((BTN(4) = '1')) then
+				tmrCntr <= (others => '0');
+			end if;
+		elsif (tmrCntr < TMR_CNTR_MAX) then
 			tmrCntr <= tmrCntr + 1;
 		end if;
 	end if;
@@ -658,17 +665,21 @@ Inst_btn_debounce: btn_debounce port map(
 		BTN_O => btnDeBnc
 	);
 
-
-ETH_RST_process : process (CLK)
+ETH_MODE <= SW(2 downto 0);
+ETH_RST_process : process (BUFG_O)
 begin
-	if (falling_edge(CLK)) then
-		if ( tmrCntr < TMR_CNTR_MAX and ETH_RST_cntr < 2) then
+	if (falling_edge(BUFG_O)) then
+		if ( tmrCntr < TMR_CNTR_MAX-2) then
 			ETH_RST <= '0';
-			ETH_RXD <= "0011";
-			ETH_COL <= '1';
+			-- MODE[2:0] - ETH_COL & ETH_RXD[1:0]
+		  -- 011 - 100Base-TX Full Duplex. Auto-negotiation disabled. CRS is active during Receive.
+			-- 110 - Power Down mode
+			-- 111 - All capable. Auto-negotiation enabled.
+			ETH_COL <= 			ETH_MODE(2);
+			ETH_RXD <= "00" & ETH_MODE(1 downto 0);				
 		end if;
 
-		if ( tmrCntr = TMR_CNTR_MAX and ETH_RST_cntr < 2) then
+		if ( tmrCntr = TMR_CNTR_MAX-2) then
 			ETH_RST <= '1';
 			--ETH_SMI_en <= '1';
 			--ETH_TXD_4 <='0';
@@ -677,7 +688,7 @@ begin
 			ETH_RST_cntr <= ETH_RST_cntr + 1;
 		end if;		
 		
-		if (tmrCntr = TMR_CNTR_MAX and ETH_RST_cntr = 2) then
+		if (tmrCntr = TMR_CNTR_MAX) then
 			--ETH_RST <= '1';
 			ETH_RXD <= "ZZZZ";
 			ETH_RST_cntr <= ETH_RST_cntr + 1;
